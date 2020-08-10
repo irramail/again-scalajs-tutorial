@@ -2,6 +2,7 @@ package tutorial.webapp
 
 import org.scalajs.dom
 import org.scalajs.dom.document
+import org.scalajs.dom.html
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 object TutorialApp {
@@ -14,6 +15,21 @@ object TutorialApp {
 @JSExportTopLevel("addClickedMessage")
 def addClickedMessage(): Unit = {
   appendPar(document.body, "You clicked the button!")
+}
+
+@JSExportTopLevel("set")
+def set(): Unit = {
+  println(document.getElementById("alt"))
+  val settings = document.getElementById("url").asInstanceOf[html.Input].value + '|' +
+  document.getElementById("fname").asInstanceOf[html.Input].value + '|' +
+    document.getElementById("description").asInstanceOf[html.Input].value + '|' +
+    document.getElementById("alt").asInstanceOf[html.Input].value + '|' +
+    document.getElementById("metaName").asInstanceOf[html.Input].value + '|' +
+    document.getElementById("metaDescription").asInstanceOf[html.Input].value + '|' +
+    document.getElementById("alt").asInstanceOf[html.Input].value;
+  dom.window.localStorage.setItem(
+      "settings", settings
+    )
 }
 
 def main(args: Array[String]): Unit = {
@@ -34,6 +50,9 @@ def main(args: Array[String]): Unit = {
 
     appendInput("url", "50", "https://")
     appendInput("fname", "30", "Image")
+    appendButton("Set", "set()")
+    appendButton("Retry", "reTry()")
+    appendButton("Upload", "upload()")
     appendBr()
     appendInput("alt", "132", "alt")
     appendBr()
@@ -44,6 +63,9 @@ def main(args: Array[String]): Unit = {
     appendInput("description", "132", "Thumbnail description")
     appendBr()
     appendTextarea()
+    appendBr()
+    appendDiv()
+      println(document.getElementById("alt").asInstanceOf[html.Input].value)
   })
 }
 
@@ -59,6 +81,15 @@ def setupUI(): Unit = {
 def appendBr(): Unit = {
   val br = document.createElement("br")
   document.body.appendChild(br)
+}
+
+def appendButton(value: String, functionName: String) {
+  val input = document.createElement("input")
+  input.setAttribute("type", "button")
+  input.setAttribute("value", value)
+  input.setAttribute("onclick", functionName)
+
+  document.body.appendChild(input)
 }
 
 def appendInput(id: String, size: String, placeholder: String): Unit = {
@@ -114,4 +145,33 @@ def appendTextarea(): Unit = {
 
   document.body.appendChild(textarea)
 }
+
+def appendDiv(): Unit = {
+    val wrapperDiv = document.createElement("div")
+    wrapperDiv.setAttribute("id", "wrapperTrack")
+
+    val insideDiv = document.createElement("div")
+    insideDiv.setAttribute("id", "track")
+
+    val img = document.createElement("img")
+    img.setAttribute("src", "/schema/schemaImg_1.jpg")
+    img.setAttribute("alt", "img")
+    img.setAttribute("height", "100px")
+
+    val link = document.createElement("a")
+    link.setAttribute("href", "/schema/schema.tgz")
+    link.setAttribute("style", "position: relative; top: -90px;")
+    link.setAttribute("download", "")
+    link.textContent = "Download"
+
+
+    insideDiv.appendChild(img)
+    insideDiv.appendChild(link)
+
+
+    wrapperDiv.appendChild(insideDiv)
+
+    document.body.appendChild(wrapperDiv)
+  }
+
 }
