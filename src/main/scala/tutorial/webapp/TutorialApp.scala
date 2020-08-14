@@ -13,7 +13,9 @@ class Example[Builder, Output <: FragT, FragT]
              (val bundle: scalatags.generic.Bundle[Builder, Output, FragT]){
   val htmlFrag = {
     import bundle.all._
+
     div(
+      h1(id:="title", "This is a title"),
       h1("Header 1"),
       h2("Header 2"),
       h3("Header 3"),
